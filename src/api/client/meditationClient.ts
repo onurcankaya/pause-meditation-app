@@ -5,7 +5,7 @@ const MEDITATIONS_URL = `${BASE_URL}/meditations`;
 
 export const meditationClient = {
   getAll: async (categoryId: string): Promise<Meditation[]> => {
-    const url = `${MEDITATIONS_URL}?categoryId=${categoryId}`;
+    const url = `${MEDITATIONS_URL}/${categoryId}`;
 
     const response = await fetch(url);
 
