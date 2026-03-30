@@ -45,7 +45,7 @@ export default function CategoryPage() {
       <h3 className="text-lg font-semibold">{category?.name}</h3>
       <p className="text-sm">{category?.description}</p>
 
-      <div className="w-full sm:w-auto space-y-6 mt-6">
+      <div className="w-full space-y-6 mt-6">
         {category &&
           Object.entries(meditationsByLevel).map((item, index) => {
             const [level, meditations] = item;
