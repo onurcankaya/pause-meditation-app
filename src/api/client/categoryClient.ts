@@ -11,4 +11,12 @@ export const categoryClient = {
 
     return response.json();
   },
+
+  get: async ({ id }: { id: string }): Promise<Category> => {
+    const response = await fetch(`${CATEGORIES_URL}/${id}`);
+
+    if (!response.ok) throw new Error('Failed to fetch meditation category');
+
+    return response.json();
+  },
 };

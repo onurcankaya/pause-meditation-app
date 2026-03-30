@@ -10,4 +10,10 @@ export class MeditationModel {
 
     return result.rows;
   }
+
+  static async update(meditationId: string): Promise<void> {
+    const query = `UPDATE meditations SET is_completed = true WHERE id = $1`;
+
+    await pool.query(query, [meditationId]);
+  }
 }

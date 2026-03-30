@@ -7,7 +7,7 @@ export async function GET() {
 
     return NextResponse.json(categories);
   } catch (error) {
-    console.error('Category fetch error:', error);
+    console.error('Categories fetch error:', error);
 
     return NextResponse.json(
       { error: 'Failed to fetch meditation categories' },

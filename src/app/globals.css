@@ -46,6 +46,12 @@
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
+
+  /* custom colors */
+  --color-yellow: #ffce00 !important;
+  --color-green: #00d500 !important;
+
+  --color-primary: #ffce00 !important;
 }
 
 :root {

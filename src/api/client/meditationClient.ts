@@ -13,4 +13,15 @@ export const meditationClient = {
 
     return response.json();
   },
+
+  update: async ({ id }: { id: string }): Promise<Meditation> => {
+    const response = await fetch(`${MEDITATIONS_URL}/${id}/complete`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+    });
+
+    if (!response.ok) throw new Error('Failed to update meditation');
+
+    return response.json();
+  },
 };
