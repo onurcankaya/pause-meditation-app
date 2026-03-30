@@ -6,5 +6,6 @@ export type Meditation = {
   audio_url: string;
   category_id: string;
   level: number;
+  is_completed: boolean;
   created_at: string;
 };

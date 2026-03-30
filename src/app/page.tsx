@@ -1,27 +1,29 @@
 'use client';
 
 import { useCategories } from '@/hooks/useCategories';
-import MeditationCategoryCard from './components/MeditationCategoryCard';
+import { Spinner } from '@/components/ui/spinner';
+import PageWrapper from '@/components/common/PageWrapper';
+import CategoryCard from '@/components/CategoryCard';
 
 export default function Home() {
-  const {
-    data: categories,
-    isLoading: isLoadingCategories,
-    error: errorCategories,
-  } = useCategories();
+  const { data: categories, isLoading, error } = useCategories();
 
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center p-16 bg-white dark:bg-black sm:items-start">
-        <h3 className="text-lg font-semibold">Meditations</h3>
+    <PageWrapper>
+      <h3 className="text-lg font-semibold">Meditations</h3>
 
-        <div className="space-y-8 mt-10">
+      {isLoading ? (
+        <div className="w-full">
+          <Spinner className="h-8 w-8" />
+        </div>
+      ) : (
+        <div className="w-full space-y-6 mt-6">
           {categories?.length &&
             categories.map((category) => (
-              <MeditationCategoryCard key={category.id} category={category} />
+              <CategoryCard key={category.id} category={category} />
             ))}
         </div>
-      </main>
-    </div>
+      )}
+    </PageWrapper>
   );
 }
