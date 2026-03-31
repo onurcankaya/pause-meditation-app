@@ -6,7 +6,6 @@ import PageWrapper from '@/components/common/PageWrapper';
 import MeditationCard from '@/components/MeditationCard';
 import { useCategory } from '@/hooks/useCategories';
 import { useMeditations } from '@/hooks/useMeditations';
-import { Meditation } from '@/api/types/meditation';
 
 export default function LevelPage() {
   const params = useParams();
@@ -28,13 +27,12 @@ export default function LevelPage() {
   if (isLoadingCategory || isLoadingMeditations) return 'Loading...';
 
   return (
-    <PageWrapper>
-      <h3 className="text-lg font-semibold">
-        {category?.name} • Level {categoryLevel}
-      </h3>
-      <p className="text-sm">{category?.description}</p>
-
-      <div className="w-full space-y-6 mt-6">
+    <PageWrapper
+      title={`${category?.name} • Level ${categoryLevel}`}
+      description={category?.description}
+      showBackButton
+    >
+      <div className="w-full space-y-6 my-4">
         {levelMeditations?.map((meditation) => (
           <MeditationCard key={meditation.id} meditation={meditation} />
         ))}

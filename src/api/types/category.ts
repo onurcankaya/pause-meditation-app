@@ -7,6 +7,6 @@ export enum MeditationCategory {
 export type Category = {
   id: string;
   name: MeditationCategory;
-  description: string | null;
+  description?: string | null;
   created_at: string;
 };
