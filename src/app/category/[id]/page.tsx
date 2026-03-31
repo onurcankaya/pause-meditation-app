@@ -45,6 +45,8 @@ export default function CategoryPage() {
       title={category?.name}
       description={category?.description}
       showBackButton
+      isLoading={isLoadingCategory || isLoadingMeditations}
+      error={errorCategory || errorMeditations}
     >
       <div className="w-full space-y-6 my-4">
         {category &&
