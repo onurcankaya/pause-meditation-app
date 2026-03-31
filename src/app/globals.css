@@ -164,5 +164,26 @@
   }
   body {
     @apply bg-background text-foreground;
+    overflow-x: hidden;
+  }
+
+  /* hide scrollbar */
+  html,
+  body {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE/Edge */
+  }
+  html::-webkit-scrollbar,
+  body::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* mobile input */
+  input,
+  textarea,
+  select {
+    @media (max-width: 640px) {
+      font-size: 16px !important;
+    }
   }
 }
