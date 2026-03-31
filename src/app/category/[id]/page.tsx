@@ -41,11 +41,14 @@ export default function CategoryPage() {
   }, [meditations]);
 
   return (
-    <PageWrapper>
-      <h3 className="text-lg font-semibold">{category?.name}</h3>
-      <p className="text-sm">{category?.description}</p>
-
-      <div className="w-full space-y-6 mt-6">
+    <PageWrapper
+      title={category?.name}
+      description={category?.description}
+      showBackButton
+      isLoading={isLoadingCategory || isLoadingMeditations}
+      error={errorCategory || errorMeditations}
+    >
+      <div className="w-full space-y-6 my-4">
         {category &&
           Object.entries(meditationsByLevel).map((item, index) => {
             const [level, meditations] = item;

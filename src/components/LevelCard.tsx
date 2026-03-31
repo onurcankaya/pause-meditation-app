@@ -30,8 +30,10 @@ export default function LevelCard({
   return (
     <Card className="cursor-pointer" onClick={handleClick}>
       <CardHeader>
-        <CardTitle>{category?.name}</CardTitle>
-        <CardDescription>Level {level}</CardDescription>
+        <CardTitle className="text-sm sm:text-md">{category?.name}</CardTitle>
+        <CardDescription className="text-xs sm:text-sm">
+          Level {level}
+        </CardDescription>
       </CardHeader>
     </Card>
   );

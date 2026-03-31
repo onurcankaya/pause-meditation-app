@@ -3,8 +3,11 @@ import './globals.css';
 import { ReactQueryProvider } from '@/components/providers/ReactQueryProvider';
 
 export const metadata: Metadata = {
-  title: 'Meditation App',
-  description: 'Guided meditations on the go',
+  title: 'Pause',
+  description: 'Guided meditations',
+  icons: {
+    apple: '/apple-touch-icon.png',
+  },
   viewport: {
     width: 'device-width',
     initialScale: 1,

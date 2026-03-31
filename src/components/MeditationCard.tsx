@@ -42,7 +42,7 @@ export default function MeditationCard({ meditation }: MeditationCardProps) {
   return (
     <Card
       className={cn(
-        'border border-gray',
+        'border border-gray gap-6',
         meditation.is_completed && 'border border-primary',
       )}
     >
@@ -60,9 +60,6 @@ export default function MeditationCard({ meditation }: MeditationCardProps) {
           <CardTitle className="text-sm sm:text-md">
             {meditation.title}
           </CardTitle>
-          <CardDescription className="text-xs sm:text-sm">
-            {meditation.description}
-          </CardDescription>
         </div>
 
         <Button variant="ghost">
