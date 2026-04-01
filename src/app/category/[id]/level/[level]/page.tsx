@@ -3,6 +3,7 @@
 import { useMemo } from 'react';
 import { useParams } from 'next/navigation';
 import PageWrapper from '@/components/common/PageWrapper';
+import QueryState from '@/components/common/QueryState';
 import MeditationCard from '@/components/MeditationCard';
 import { useCategory } from '@/hooks/useCategories';
 import { useMeditations } from '@/hooks/useMeditations';
@@ -35,14 +36,17 @@ export default function LevelPage() {
       title={`${category?.name} • Level ${categoryLevel}`}
       description={category?.description}
       showBackButton
-      isLoading={isLoadingCategory || isLoadingMeditations}
-      error={errorCategory || errorMeditations}
     >
-      <div className="w-full space-y-6 my-4">
-        {levelMeditations?.map((meditation) => (
-          <MeditationCard key={meditation.id} meditation={meditation} />
-        ))}
-      </div>
+      <QueryState
+        isLoading={isLoadingCategory || isLoadingMeditations}
+        error={errorCategory || errorMeditations}
+      >
+        <div className="w-full space-y-6">
+          {levelMeditations?.map((meditation) => (
+            <MeditationCard key={meditation.id} meditation={meditation} />
+          ))}
+        </div>
+      </QueryState>
     </PageWrapper>
   );
 }

@@ -18,20 +18,29 @@ export default function Navigation({
   const router = useRouter();
 
   return (
-    <header className="w-full flex items-center justify-between h-[60]">
+    <header className="w-full flex items-center justify-between h-[50] py-2">
       {showBackButton ? (
         <Button
           variant="secondary"
-          className="rounded-full w-8 h-8"
+          className="rounded-full w-10 h-10"
           onClick={() => router.back()}
         >
-          <ChevronLeft className="w-8 h-8" />
+          <ChevronLeft />
         </Button>
       ) : (
         <div className="w-8" />
       )}
-      <div className="text-center">
-        <h1 className="text-md font-semibold mb-1">{title}</h1>
+      <div className="flex flex-col items-center gap-1 text-center">
+        <div className="flex items-center gap-1">
+          {!showBackButton && (
+            <img
+              src="/pause-logo.png"
+              alt="pause-app-logo"
+              className="w-5 h-5"
+            />
+          )}
+          <h1 className="text-md font-semibold">{title}</h1>
+        </div>
         {description && (
           <p className="text-sm text-muted-foreground text-xs sm:text-sm">
             {description}
