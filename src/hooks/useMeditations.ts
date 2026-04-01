@@ -1,4 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { toast } from 'sonner';
 import { meditationClient } from '@/api/client/meditationClient';
 
 export function useMeditations(categoryId: string) {
@@ -15,6 +16,7 @@ export function useUpdateMeditation() {
     mutationFn: meditationClient.update,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['meditations'] });
+      toast.success('Meditation session completed');
     },
   });
 }
