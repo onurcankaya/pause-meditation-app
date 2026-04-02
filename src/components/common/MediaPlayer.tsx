@@ -6,12 +6,18 @@ import { formatSeconds } from '@/lib/timeUtils';
 type MediaPlayerProps = {
   src: string;
   type: 'audio' | 'video';
+  title: string;
+  artist?: string;
+  album?: string;
   onMediaEnd: () => void;
 };
 
 export default function MediaPlayer({
   src,
   type,
+  title,
+  artist = 'Pause',
+  album,
   onMediaEnd,
 }: MediaPlayerProps) {
   const mediaRef = useRef<HTMLAudioElement | HTMLVideoElement>(null);
@@ -37,6 +43,16 @@ export default function MediaPlayer({
       media.removeEventListener('ended', handleEnded);
     };
   }, []);
+
+  useEffect(() => {
+    if ('mediaSession' in navigator) {
+      navigator.mediaSession.metadata = new MediaMetadata({
+        title,
+        artist,
+        album,
+      });
+    }
+  }, [title, artist, album]);
 
   const togglePlay = async () => {
     if (!mediaRef.current) return;

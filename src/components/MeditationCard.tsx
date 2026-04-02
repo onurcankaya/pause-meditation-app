@@ -11,6 +11,7 @@ import {
 } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import MediaPlayer from './common/MediaPlayer';
+import { useCategory } from '@/hooks/useCategories';
 import { useUpdateMeditation } from '@/hooks/useMeditations';
 import { cn } from '@/lib/utils';
 import { Meditation } from '@/api/types/meditation';
@@ -22,15 +23,17 @@ type MeditationCardProps = {
 export default function MeditationCard({ meditation }: MeditationCardProps) {
   const [showDetails, setShowDetails] = useState(false);
 
+  const { data: category } = useCategory(meditation.category_id);
+
   const updateMeditation = useUpdateMeditation();
 
   function toggleDetails() {
     setShowDetails((prev) => !prev);
   }
 
-  function handleMediaEnd() {
+  function handleMeditationComplete(meditationId: string) {
     updateMeditation.mutate({
-      id: meditation.id,
+      id: meditationId,
     });
   }
 
@@ -86,7 +89,9 @@ export default function MeditationCard({ meditation }: MeditationCardProps) {
           <MediaPlayer
             src={meditation.audio_url}
             type={mediaType}
-            onMediaEnd={handleMediaEnd}
+            title={meditation.title}
+            album={category?.name}
+            onMediaEnd={() => handleMeditationComplete(meditation.id)}
           />
         </CardContent>
       )}
