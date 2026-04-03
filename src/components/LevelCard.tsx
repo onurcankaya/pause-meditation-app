@@ -8,19 +8,13 @@ import {
   CardDescription,
 } from '@/components/ui/card';
 import { Category } from '@/api/types/category';
-import { Meditation } from '@/api/types/meditation';
 
 type LevelCardProps = {
   category: Category;
   level: string;
-  meditations: Meditation[];
 };
 
-export default function LevelCard({
-  category,
-  level,
-  meditations,
-}: LevelCardProps) {
+export default function LevelCard({ category, level }: LevelCardProps) {
   const router = useRouter();
 
   function handleClick() {
@@ -30,8 +24,8 @@ export default function LevelCard({
   return (
     <Card className="cursor-pointer" onClick={handleClick}>
       <CardHeader>
-        <CardTitle className="text-sm sm:text-md">{category?.name}</CardTitle>
-        <CardDescription className="text-xs sm:text-sm">
+        <CardTitle>{category?.name}</CardTitle>
+        <CardDescription className="text-sm sm:text-base">
           Level {level}
         </CardDescription>
       </CardHeader>

@@ -23,7 +23,7 @@ export default function PageWrapper({
         description={description}
         showBackButton={showBackButton}
       />
-      <main className="flex flex-1 w-full max-w-xl flex-col items-center sm:items-start px-4 py-6">
+      <main className="flex flex-1 w-full max-w-xl flex-col items-center sm:items-start px-4 py-8">
         {children}
       </main>
     </div>
