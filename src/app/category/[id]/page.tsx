@@ -56,12 +56,7 @@ export default function CategoryPage() {
             Object.entries(meditationsByLevel).map((item, index) => {
               const [level, meditations] = item;
               return (
-                <LevelCard
-                  key={index}
-                  category={category}
-                  level={level}
-                  meditations={meditations}
-                />
+                <LevelCard key={index} category={category} level={level} />
               );
             })}
         </div>
