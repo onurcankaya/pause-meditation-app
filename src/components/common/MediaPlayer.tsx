@@ -9,7 +9,7 @@ type MediaPlayerProps = {
   title: string;
   artist?: string;
   album?: string;
-  onMediaEnd: () => void;
+  onMediaEnd?: () => void;
 };
 
 export default function MediaPlayer({
@@ -78,30 +78,36 @@ export default function MediaPlayer({
           ref={mediaRef as any}
           src={src}
           onEnded={onMediaEnd}
-          className="h-[300] rounded-md"
+          className="max-h-[300] rounded-md"
+          controls
         />
       ) : (
         <audio ref={mediaRef as any} src={src} onEnded={onMediaEnd} />
       )}
 
-      <div className="w-full flex flex-col gap-4">
-        <Button onClick={togglePlay}>{isPlaying ? 'Pause' : 'Play'}</Button>
+      {type === 'audio' && (
+        <div className="w-full flex flex-col gap-4">
+          <Button
+            onClick={togglePlay}
+            variant={type === 'audio' ? 'default' : 'secondary'}
+          >
+            {isPlaying ? 'Pause' : 'Play'}
+          </Button>
 
-        <Slider
-          value={[currentTime]}
-          max={duration}
-          step={1}
-          onValueChange={(value) => seek(value[0])}
-          className="w-full"
-        />
+          <Slider
+            value={[currentTime]}
+            max={duration}
+            step={1}
+            onValueChange={(value) => seek(value[0])}
+            className="w-full"
+          />
 
-        <div>
-          <p className="text-center">
+          <p className="text-xs sm:text-sm text-center">
             {`${formatSeconds(Math.floor(currentTime))} /
           ${formatSeconds(Math.floor(duration))}`}
           </p>
         </div>
-      </div>
+      )}
     </div>
   );
 }

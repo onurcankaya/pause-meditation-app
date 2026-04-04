@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState } from 'react';
 import { Badge, BadgeCheck, ChevronDown, ChevronUp } from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -31,15 +31,10 @@ export default function MeditationCard({ meditation }: MeditationCardProps) {
     });
   }
 
-  const mediaType = useMemo(() => {
-    if (meditation.audio_url.includes('mp4')) return 'video';
-    else return 'audio';
-  }, [meditation]);
-
   return (
     <Card
       className={cn(
-        'border border-gray gap-6',
+        'border border-gray gap-4',
         meditation.is_completed && 'border border-primary',
       )}
     >
@@ -79,10 +74,19 @@ export default function MeditationCard({ meditation }: MeditationCardProps) {
       </CardHeader>
 
       {showDetails && (
-        <CardContent>
+        <CardContent className="space-y-4">
+          {meditation?.video_url && (
+            <MediaPlayer
+              src={meditation.video_url}
+              type="video"
+              title={meditation.title}
+              album={category?.name}
+            />
+          )}
+
           <MediaPlayer
             src={meditation.audio_url}
-            type={mediaType}
+            type="audio"
             title={meditation.title}
             album={category?.name}
             onMediaEnd={() => handleMeditationComplete(meditation.id)}
