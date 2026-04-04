@@ -6,6 +6,9 @@ export type Meditation = {
   audio_url: string;
   category_id: string;
   level: number;
+  video_url: string | null;
+  video_duration_seconds: string | null;
+  day: number;
   is_completed: boolean;
   created_at: string;
 };

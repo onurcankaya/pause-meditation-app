@@ -4,7 +4,7 @@ import { Meditation } from '@/api/types/meditation';
 export class MeditationModel {
   static async findAll(categoryId: string): Promise<Meditation[]> {
     const result = await pool.query(
-      'SELECT * FROM meditations WHERE category_id = $1 ORDER BY created_at ASC',
+      'SELECT * FROM meditations WHERE category_id = $1 ORDER BY day ASC',
       [categoryId],
     );
 
