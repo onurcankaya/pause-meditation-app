@@ -41,7 +41,7 @@ export default function LevelPage() {
         isLoading={isLoadingCategory || isLoadingMeditations}
         error={errorCategory || errorMeditations}
       >
-        <div className="w-full space-y-6">
+        <div className="w-full space-y-4">
           {levelMeditations?.map((meditation) => (
             <MeditationCard key={meditation.id} meditation={meditation} />
           ))}

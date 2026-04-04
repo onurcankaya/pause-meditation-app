@@ -1,4 +1,5 @@
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState, useEffect, useMemo } from 'react';
+import { Play, Pause } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Slider } from '@/components/ui/slider';
 import { formatSeconds } from '@/lib/timeUtils';
@@ -71,8 +72,15 @@ export default function MediaPlayer({
     }
   };
 
+  const audioButtonLabel = useMemo(() => {
+    if (currentTime === 0) {
+      return 'Begin meditation';
+    }
+    return isPlaying ? 'Pause' : 'Play';
+  }, [currentTime, isPlaying]);
+
   return (
-    <div className="w-full flex flex-col items-center gap-4">
+    <div className="w-full flex flex-col items-center gap-4 p-2">
       {type === 'video' ? (
         <video
           ref={mediaRef as any}
@@ -90,8 +98,14 @@ export default function MediaPlayer({
           <Button
             onClick={togglePlay}
             variant={type === 'audio' ? 'default' : 'secondary'}
+            className="h-9"
           >
-            {isPlaying ? 'Pause' : 'Play'}
+            {isPlaying ? (
+              <Pause className="fill-black" />
+            ) : (
+              <Play className="fill-black" />
+            )}
+            {audioButtonLabel}
           </Button>
 
           <Slider
@@ -102,7 +116,7 @@ export default function MediaPlayer({
             className="w-full"
           />
 
-          <p className="text-xs sm:text-sm text-center">
+          <p className="text-center">
             {`${formatSeconds(Math.floor(currentTime))} /
           ${formatSeconds(Math.floor(duration))}`}
           </p>

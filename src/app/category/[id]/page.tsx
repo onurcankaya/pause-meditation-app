@@ -51,7 +51,7 @@ export default function CategoryPage() {
         isLoading={isLoadingCategory || isLoadingMeditations}
         error={errorCategory || errorMeditations}
       >
-        <div className="w-full space-y-6">
+        <div className="w-full space-y-4">
           {category &&
             Object.entries(meditationsByLevel).map((item, index) => {
               const [level, meditations] = item;

@@ -34,54 +34,40 @@ export default function MeditationCard({ meditation }: MeditationCardProps) {
   return (
     <Card
       className={cn(
-        'border border-gray gap-4',
+        'border border-gray gap-4 py-3',
         meditation.is_completed && 'border border-primary',
       )}
     >
       <CardHeader
-        className="flex flex-row justify-between items-center"
+        className={cn(
+          'flex flex-row justify-between items-center',
+          showDetails && 'border-b',
+        )}
         onClick={toggleDetails}
       >
+        <CardTitle className="text-sm md:text-base">
+          Day {meditation.day}
+        </CardTitle>
         {meditation.is_completed ? (
           <BadgeCheck className="text-primary" />
         ) : (
-          <Badge className="text-ring" />
+          <Badge className={cn('text-ring', showDetails && 'text-primary')} />
         )}
-
-        <div className="flex flex-col gap-1">
-          <CardTitle className="text-sm sm:text-base">
-            {meditation.title}
-          </CardTitle>
-        </div>
-
-        <Button variant="ghost">
-          {showDetails ? (
-            <ChevronUp
-              className={cn(
-                'text-ring',
-                meditation.is_completed && 'text-primary',
-              )}
-            />
-          ) : (
-            <ChevronDown
-              className={cn(
-                'text-ring',
-                meditation.is_completed && 'text-primary',
-              )}
-            />
-          )}
-        </Button>
       </CardHeader>
 
       {showDetails && (
         <CardContent className="space-y-4">
           {meditation?.video_url && (
-            <MediaPlayer
-              src={meditation.video_url}
-              type="video"
-              title={meditation.title}
-              album={category?.name}
-            />
+            <>
+              <MediaPlayer
+                src={meditation.video_url}
+                type="video"
+                title={meditation.title}
+                album={category?.name}
+              />
+
+              <div className="border-b bg- mx-[-16]" />
+            </>
           )}
 
           <MediaPlayer
