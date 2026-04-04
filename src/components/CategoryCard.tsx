@@ -23,8 +23,8 @@ export default function CategoryCard({ category }: CategoryCardProps) {
   return (
     <Card className="cursor-pointer" onClick={handleClick}>
       <CardHeader>
-        <CardTitle className="text-sm sm:text-md">{category.name}</CardTitle>
-        <CardDescription className="text-xs sm:text-sm">
+        <CardTitle>{category.name}</CardTitle>
+        <CardDescription className="text-sm sm:text-base">
           {category.description}
         </CardDescription>
       </CardHeader>

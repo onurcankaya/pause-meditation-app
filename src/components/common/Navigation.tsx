@@ -18,7 +18,7 @@ export default function Navigation({
   const router = useRouter();
 
   return (
-    <header className="w-full flex items-center justify-between h-[50] py-2">
+    <header className="w-full flex items-center justify-between py-2">
       {showBackButton ? (
         <Button
           variant="secondary"
@@ -35,14 +35,14 @@ export default function Navigation({
           {!showBackButton && (
             <img
               src="/pause-logo.png"
-              alt="pause-app-logo"
+              alt="pause app logo"
               className="w-5 h-5"
             />
           )}
-          <h1 className="text-md font-semibold">{title}</h1>
+          <h1 className="font-semibold">{title}</h1>
         </div>
         {description && (
-          <p className="text-sm text-muted-foreground text-xs sm:text-sm">
+          <p className="text-muted-foreground text-xs sm:text-sm">
             {description}
           </p>
         )}

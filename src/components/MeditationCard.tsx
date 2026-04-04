@@ -2,13 +2,7 @@
 
 import { useState, useMemo } from 'react';
 import { Badge, BadgeCheck, ChevronDown, ChevronUp } from 'lucide-react';
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardContent,
-} from '@/components/ui/card';
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import MediaPlayer from './common/MediaPlayer';
 import { useCategory } from '@/hooks/useCategories';
@@ -60,7 +54,7 @@ export default function MeditationCard({ meditation }: MeditationCardProps) {
         )}
 
         <div className="flex flex-col gap-1">
-          <CardTitle className="text-sm sm:text-md">
+          <CardTitle className="text-sm sm:text-base">
             {meditation.title}
           </CardTitle>
         </div>
