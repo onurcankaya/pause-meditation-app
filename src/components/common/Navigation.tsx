@@ -22,10 +22,10 @@ export default function Navigation({
       {showBackButton ? (
         <Button
           variant="secondary"
-          className="rounded-full w-10 h-10"
+          className="rounded-full w-12 h-12"
           onClick={() => router.back()}
         >
-          <ChevronLeft />
+          <ChevronLeft className="size-5" />
         </Button>
       ) : (
         <div className="w-8" />
@@ -36,18 +36,18 @@ export default function Navigation({
             <img
               src="/pause-logo.png"
               alt="pause app logo"
-              className="w-5 h-5"
+              className="w-6 h-6"
             />
           )}
           <h1 className="font-semibold">{title}</h1>
         </div>
         {description && (
-          <p className="text-muted-foreground text-xs sm:text-sm">
+          <p className="text-muted-foreground text-sm sm:text-base">
             {description}
           </p>
         )}
       </div>
-      <div className="w-8" />
+      <div className="w-12" />
     </header>
   );
 }
