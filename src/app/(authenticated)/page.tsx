@@ -9,7 +9,7 @@ export default function Home() {
   const { data: categories, isLoading, error } = useCategories();
 
   return (
-    <PageWrapper title="Pause" description="Select a meditation category">
+    <PageWrapper showLogo description="Select a category">
       <QueryState isLoading={isLoading} error={error}>
         <div className="w-full space-y-4">
           {categories?.length &&

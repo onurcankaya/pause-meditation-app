@@ -1,12 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-} from '@/components/ui/card';
+import { Card, CardHeader, CardTitle } from '@/components/ui/card';
 import { Category } from '@/api/types/category';
 
 type LevelCardProps = {
@@ -22,12 +17,9 @@ export default function LevelCard({ category, level }: LevelCardProps) {
   }
 
   return (
-    <Card className="cursor-pointer" onClick={handleClick}>
+    <Card className="border py-3 cursor-pointer" onClick={handleClick}>
       <CardHeader>
-        <CardTitle>{category?.name}</CardTitle>
-        <CardDescription className="text-sm sm:text-base">
-          Level {level}
-        </CardDescription>
+        <CardTitle>Level {level}</CardTitle>
       </CardHeader>
     </Card>
   );

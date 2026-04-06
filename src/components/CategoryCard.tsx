@@ -21,7 +21,7 @@ export default function CategoryCard({ category }: CategoryCardProps) {
   }
 
   return (
-    <Card className="cursor-pointer" onClick={handleClick}>
+    <Card className="border py-3 cursor-pointer" onClick={handleClick}>
       <CardHeader>
         <CardTitle>{category.name}</CardTitle>
         <CardDescription className="text-sm sm:text-base">

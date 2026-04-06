@@ -6,7 +6,7 @@ export class CategoryService {
     return CategoryModel.findAll();
   }
 
-  static async getCategory(id: string): Promise<Category> {
-    return CategoryModel.find(id);
+  static async getCategory(categoryId: string): Promise<Category> {
+    return CategoryModel.find(categoryId);
   }
 }

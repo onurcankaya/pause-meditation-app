@@ -1,24 +1,40 @@
 'use client';
 
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { ChevronLeft } from 'lucide-react';
+import { useSession, signOut } from 'next-auth/react';
+import { ChevronLeft, Menu, Loader } from 'lucide-react';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover';
+import { Spinner } from '@/components/ui/spinner';
 import { Button } from '@/components/ui/button';
 
 type NavigationProps = {
-  title?: string;
+  title?: string | null;
   description?: string | null;
-  showBackButton?: boolean;
+  showLogo?: boolean | null;
+  showBackButton?: boolean | null;
+  isLoading?: boolean | null;
 };
 
 export default function Navigation({
   title,
   description,
+  showLogo = false,
   showBackButton,
+  isLoading = false,
 }: NavigationProps) {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const { data: session } = useSession();
+
   const router = useRouter();
 
   return (
-    <header className="w-full flex items-center justify-between py-2">
+    <header className="w-full flex items-center justify-between py-1">
       {showBackButton ? (
         <Button
           variant="secondary"
@@ -30,24 +46,53 @@ export default function Navigation({
       ) : (
         <div className="w-8" />
       )}
-      <div className="flex flex-col items-center gap-1 text-center">
-        <div className="flex items-center gap-1">
-          {!showBackButton && (
-            <img
-              src="/pause-logo.png"
-              alt="pause app logo"
-              className="w-6 h-6"
-            />
+      {isLoading ? (
+        <Spinner icon={Loader} className="size-5" />
+      ) : (
+        <div className="flex flex-col items-center gap-0.5 text-center">
+          {showLogo && (
+            <div className="flex items-center gap-1">
+              <img
+                src="/pause-logo.png"
+                alt="pause app logo"
+                className="w-6 h-6"
+              />
+              <h1 className="font-semibold">Pause</h1>
+            </div>
           )}
-          <h1 className="font-semibold">{title}</h1>
+
+          {title && <h1 className="font-semibold">{title}</h1>}
+
+          {description && (
+            <p className="text-muted-foreground text-sm sm:text-base">
+              {description}
+            </p>
+          )}
         </div>
-        {description && (
-          <p className="text-muted-foreground text-sm sm:text-base">
-            {description}
-          </p>
-        )}
-      </div>
-      <div className="w-12" />
+      )}
+
+      {session?.user ? (
+        <Popover open={isMenuOpen} onOpenChange={setIsMenuOpen}>
+          <PopoverTrigger className="flex items-center justify-center rounded-full bg-secondary w-12 h-12">
+            <Menu className="size-4" />
+          </PopoverTrigger>
+          <PopoverContent
+            className="w-40 sm:w-60 p-3 space-y-1"
+            align="end"
+            sideOffset={8}
+          >
+            <Button
+              variant="outline"
+              className="w-full"
+              onClick={() => signOut({ callbackUrl: '/login' })}
+            >
+              Sign out
+            </Button>
+          </PopoverContent>
+        </Popover>
+      ) : (
+        <div className="w-8" />
+      )}
     </header>
   );
 }
