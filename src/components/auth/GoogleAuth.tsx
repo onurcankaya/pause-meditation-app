@@ -10,7 +10,7 @@ export default function GoogleAuth() {
 
       <Button
         variant="outline"
-        onClick={() => signIn('google', { callbackUrl: '/' })}
+        onClick={() => signIn('google', { callbackUrl: '/', redirect: true })}
         className="w-full py-4"
       >
         <img src="/google.svg" alt="google logo" className="w-4 h-4" />
