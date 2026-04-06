@@ -7,6 +7,7 @@ import { Toaster } from '@/components/ui/sonner';
 export const metadata: Metadata = {
   title: 'Pause',
   description: 'Guided meditations',
+  manifest: '/manifest.json',
   icons: {
     apple: '/apple-touch-icon.png',
   },
