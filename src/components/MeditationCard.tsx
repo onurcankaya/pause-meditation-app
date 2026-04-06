@@ -1,9 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { Badge, BadgeCheck, ChevronDown, ChevronUp } from 'lucide-react';
+import { Badge, BadgeCheck } from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 import MediaPlayer from './common/MediaPlayer';
 import { useCategory } from '@/hooks/useCategories';
 import { useUpdateMeditation } from '@/hooks/useMeditations';
@@ -16,6 +15,7 @@ type MeditationCardProps = {
 
 export default function MeditationCard({ meditation }: MeditationCardProps) {
   const [showDetails, setShowDetails] = useState(false);
+  const [isCompleted, setIsCompleted] = useState(meditation.is_completed);
 
   const { data: category } = useCategory(meditation.category_id);
 
@@ -26,6 +26,7 @@ export default function MeditationCard({ meditation }: MeditationCardProps) {
   }
 
   function handleMeditationComplete(meditationId: string) {
+    setIsCompleted(true);
     updateMeditation.mutate({
       id: meditationId,
     });
@@ -34,8 +35,8 @@ export default function MeditationCard({ meditation }: MeditationCardProps) {
   return (
     <Card
       className={cn(
-        'border border-gray gap-4 py-3',
-        meditation.is_completed && 'border border-primary',
+        'border gap-4 py-3',
+        isCompleted && 'border border-primary',
       )}
     >
       <CardHeader
@@ -45,10 +46,8 @@ export default function MeditationCard({ meditation }: MeditationCardProps) {
         )}
         onClick={toggleDetails}
       >
-        <CardTitle className="text-sm md:text-base">
-          Day {meditation.day}
-        </CardTitle>
-        {meditation.is_completed ? (
+        <CardTitle>Day {meditation.day}</CardTitle>
+        {isCompleted ? (
           <BadgeCheck className="text-primary" />
         ) : (
           <Badge className={cn('text-ring', showDetails && 'text-primary')} />

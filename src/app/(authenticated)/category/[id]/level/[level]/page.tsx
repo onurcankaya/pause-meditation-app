@@ -33,8 +33,9 @@ export default function LevelPage() {
 
   return (
     <PageWrapper
-      title={`${category?.name} • Level ${categoryLevel}`}
+      title={`${category?.name || ''} • Level ${categoryLevel}`}
       description={category?.description}
+      isLoading={isLoadingCategory}
       showBackButton
     >
       <QueryState

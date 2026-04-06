@@ -1,4 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/lib/auth';
 import { CategoryService } from '@/api/services/categoryService';
 
 export async function GET(
@@ -6,8 +8,16 @@ export async function GET(
   context: { params: Promise<{ id: string }> },
 ) {
   try {
+    const session = await getServerSession(authOptions);
+
+    if (!session?.user?.id) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
     const params = await context.params;
-    const category = await CategoryService.getCategory(params.id);
+    const categoryId = params.id;
+
+    const category = await CategoryService.getCategory(categoryId);
 
     return NextResponse.json(category, { status: 200 });
   } catch (error) {

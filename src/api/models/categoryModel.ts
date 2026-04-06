@@ -10,9 +10,9 @@ export class CategoryModel {
     return result.rows;
   }
 
-  static async find(id: string): Promise<Category> {
+  static async find(categoryId: string): Promise<Category> {
     const result = await pool.query('SELECT * FROM categories WHERE id = $1', [
-      id,
+      categoryId,
     ]);
 
     return result.rows[0];

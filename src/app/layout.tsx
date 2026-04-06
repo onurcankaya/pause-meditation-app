@@ -1,5 +1,6 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import './globals.css';
+import { AuthSessionProvider } from '@/components/providers/AuthSessionProvider';
 import { ReactQueryProvider } from '@/components/providers/ReactQueryProvider';
 import { Toaster } from '@/components/ui/sonner';
 
@@ -9,12 +10,13 @@ export const metadata: Metadata = {
   icons: {
     apple: '/apple-touch-icon.png',
   },
-  viewport: {
-    width: 'device-width',
-    initialScale: 1,
-    maximumScale: 1,
-    userScalable: false,
-  },
+};
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
 };
 
 export default function RootLayout({
@@ -25,10 +27,12 @@ export default function RootLayout({
   return (
     <html lang="en" className="darker">
       <body className="antialiased">
-        <ReactQueryProvider>
-          {children}
-          <Toaster />
-        </ReactQueryProvider>
+        <AuthSessionProvider>
+          <ReactQueryProvider>
+            {children}
+            <Toaster />
+          </ReactQueryProvider>
+        </AuthSessionProvider>
       </body>
     </html>
   );
