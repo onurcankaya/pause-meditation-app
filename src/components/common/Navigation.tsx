@@ -3,7 +3,15 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useSession, signOut } from 'next-auth/react';
-import { ChevronLeft, Menu, Loader } from 'lucide-react';
+import {
+  LucideIcon,
+  ChevronLeft,
+  Menu,
+  Loader,
+  House,
+  UserPen,
+  LogOut,
+} from 'lucide-react';
 import {
   Popover,
   PopoverContent,
@@ -13,6 +21,7 @@ import { Spinner } from '@/components/ui/spinner';
 import { Button } from '@/components/ui/button';
 
 type NavigationProps = {
+  icon?: LucideIcon | null;
   title?: string | null;
   description?: string | null;
   showLogo?: boolean | null;
@@ -21,6 +30,7 @@ type NavigationProps = {
 };
 
 export default function Navigation({
+  icon: Icon,
   title,
   description,
   showLogo = false,
@@ -34,11 +44,11 @@ export default function Navigation({
   const router = useRouter();
 
   return (
-    <header className="w-full flex items-center justify-between py-1">
+    <header className="w-full flex items-center justify-between h-[60] px-2">
       {showBackButton ? (
         <Button
           variant="secondary"
-          className="rounded-full w-12 h-12"
+          className="rounded-full w-10 h-10"
           onClick={() => router.back()}
         >
           <ChevronLeft className="size-5" />
@@ -61,7 +71,10 @@ export default function Navigation({
             </div>
           )}
 
-          {title && <h1 className="font-semibold">{title}</h1>}
+          <div className="flex items-center gap-2">
+            {Icon && <Icon className="size-5" />}
+            {title && <h1 className="font-semibold">{title}</h1>}
+          </div>
 
           {description && (
             <p className="text-muted-foreground text-sm sm:text-base">
@@ -73,19 +86,36 @@ export default function Navigation({
 
       {session?.user ? (
         <Popover open={isMenuOpen} onOpenChange={setIsMenuOpen}>
-          <PopoverTrigger className="flex items-center justify-center rounded-full bg-secondary w-12 h-12">
+          <PopoverTrigger className="flex items-center justify-center rounded-full bg-secondary w-10 h-10">
             <Menu className="size-4" />
           </PopoverTrigger>
           <PopoverContent
-            className="w-40 sm:w-60 p-3 space-y-1"
+            className="w-40 sm:w-60 p-3 space-y-0.5"
             align="end"
             sideOffset={8}
           >
             <Button
               variant="outline"
               className="w-full"
+              onClick={() => router.push('/')}
+            >
+              <House />
+              Home
+            </Button>
+            <Button
+              variant="outline"
+              className="w-full"
+              onClick={() => router.push('/profile')}
+            >
+              <UserPen />
+              Profile
+            </Button>
+            <Button
+              variant="outline"
+              className="w-full"
               onClick={() => signOut({ callbackUrl: '/login' })}
             >
+              <LogOut />
               Sign out
             </Button>
           </PopoverContent>
