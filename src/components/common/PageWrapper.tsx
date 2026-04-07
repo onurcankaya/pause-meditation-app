@@ -1,9 +1,11 @@
 'use client';
 
 import { ReactNode } from 'react';
+import { LucideIcon } from 'lucide-react';
 import Navigation from '@/components/common/Navigation';
 
 type PageWrapperProps = {
+  icon?: LucideIcon | null;
   title?: string | null;
   description?: string | null;
   showLogo?: boolean | null;
@@ -13,6 +15,7 @@ type PageWrapperProps = {
 };
 
 export default function PageWrapper({
+  icon,
   title = '',
   description = '',
   showLogo,
@@ -23,13 +26,14 @@ export default function PageWrapper({
   return (
     <div className="min-h-screen flex flex-col flex-1 items-center justify-center p-4">
       <Navigation
+        icon={icon}
         title={title}
         description={description}
         showLogo={showLogo}
         showBackButton={showBackButton}
         isLoading={isLoading}
       />
-      <main className="flex flex-1 w-full max-w-xl flex-col items-center sm:items-start px-4 py-8">
+      <main className="flex flex-1 w-full max-w-xl flex-col items-center sm:items-start px-4 py-10">
         {children}
       </main>
     </div>
