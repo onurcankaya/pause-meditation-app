@@ -48,17 +48,13 @@ export default function ProfilePage() {
   if (!session) return null;
 
   return (
-    <PageWrapper icon={UserPen} title={user?.name}>
+    <PageWrapper icon={UserPen} title={user?.name} description="User details">
       <QueryState isLoading={isLoading} error={error}>
         <Card className="w-full pt-4 pb-6">
-          <CardHeader>
-            <CardTitle>User details</CardTitle>
-          </CardHeader>
-
           <CardContent>
-            <form onSubmit={handleSubmit} className="space-y-4 mt-2">
+            <form onSubmit={handleSubmit} className="space-y-6 mt-2">
               <div>
-                <Label htmlFor="name" className="mb-2">
+                <Label htmlFor="name" className="mb-3">
                   Name*
                 </Label>
                 <Input
@@ -73,7 +69,7 @@ export default function ProfilePage() {
               </div>
 
               <div>
-                <Label htmlFor="email" className="mb-2">
+                <Label htmlFor="email" className="mb-3">
                   Email*
                 </Label>
                 <Input
@@ -97,7 +93,7 @@ export default function ProfilePage() {
 
               <Button
                 type="submit"
-                className="w-full mt-2"
+                className="w-full"
                 disabled={updateUser.isPending || isLoading}
               >
                 {(updateUser.isPending || isLoading) && (

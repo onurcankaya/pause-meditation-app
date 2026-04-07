@@ -44,14 +44,14 @@ export default function Navigation({
   const router = useRouter();
 
   return (
-    <header className="w-full flex items-center justify-between h-[60] px-2">
+    <header className="w-full flex items-center justify-between h-[60] px-1.5">
       {showBackButton ? (
         <Button
           variant="secondary"
-          className="rounded-full w-10 h-10"
+          className="rounded-full w-12 h-12"
           onClick={() => router.back()}
         >
-          <ChevronLeft className="size-5" />
+          <ChevronLeft className="size-6" />
         </Button>
       ) : (
         <div className="w-8" />
@@ -86,8 +86,8 @@ export default function Navigation({
 
       {session?.user ? (
         <Popover open={isMenuOpen} onOpenChange={setIsMenuOpen}>
-          <PopoverTrigger className="flex items-center justify-center rounded-full bg-secondary w-10 h-10">
-            <Menu className="size-4" />
+          <PopoverTrigger className="flex items-center justify-center rounded-full bg-secondary w-12 h-12">
+            <Menu className="size-5" />
           </PopoverTrigger>
           <PopoverContent
             className="w-40 sm:w-60 p-3 space-y-0.5"
