@@ -1,5 +1,5 @@
 import { MeditationModel } from '@/api/models/meditationModel';
-import { Meditation } from '@/api/types/meditation';
+import { Meditation, MeditationProgress } from '@/api/types/meditation';
 
 export class MeditationService {
   static async getMeditations(
@@ -21,6 +21,12 @@ export class MeditationService {
       throw new Error('Invalid meditation id');
     }
 
-    MeditationModel.update(userId, meditationId);
+    return MeditationModel.update(userId, meditationId);
+  }
+
+  static async getMeditationProgress(
+    userId: string,
+  ): Promise<MeditationProgress[]> {
+    return MeditationModel.findMeditationProgress(userId);
   }
 }
