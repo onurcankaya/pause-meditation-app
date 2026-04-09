@@ -20,3 +20,10 @@ export function useUpdateMeditation() {
     },
   });
 }
+
+export function useMeditationProgress() {
+  return useQuery({
+    queryKey: ['meditationProgress'],
+    queryFn: meditationClient.getMeditationProgress,
+  });
+}

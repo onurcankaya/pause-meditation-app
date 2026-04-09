@@ -1,4 +1,4 @@
-import { Meditation } from '@/api/types/meditation';
+import { Meditation, MeditationProgress } from '@/api/types/meditation';
 
 const BASE_URL = '/api';
 const MEDITATIONS_URL = `${BASE_URL}/meditations`;
@@ -21,6 +21,16 @@ export const meditationClient = {
     });
 
     if (!response.ok) throw new Error('Failed to update meditation');
+
+    return response.json();
+  },
+
+  getMeditationProgress: async (): Promise<MeditationProgress[]> => {
+    const url = `${MEDITATIONS_URL}/progress`;
+
+    const response = await fetch(url);
+
+    if (!response.ok) throw new Error('Failed to fetch meditation progress');
 
     return response.json();
   },

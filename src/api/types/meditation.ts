@@ -12,3 +12,10 @@ export type Meditation = {
   is_completed: boolean;
   created_at: string;
 };
+
+export type MeditationProgress = {
+  id: string;
+  user_id: string;
+  meditation_id: string;
+  completed_at: string;
+};
