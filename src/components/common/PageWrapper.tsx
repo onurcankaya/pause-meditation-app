@@ -24,7 +24,7 @@ export default function PageWrapper({
   children,
 }: PageWrapperProps) {
   return (
-    <div className="min-h-screen flex flex-col flex-1 items-center justify-center p-4">
+    <div className="min-h-screen flex flex-col flex-1 items-center justify-center">
       <Navigation
         icon={icon}
         title={title}
@@ -33,7 +33,7 @@ export default function PageWrapper({
         showBackButton={showBackButton}
         isLoading={isLoading}
       />
-      <main className="flex flex-1 w-full max-w-xl flex-col items-center sm:items-start px-4 pt-10 py-4">
+      <main className="flex flex-1 w-full max-w-xl flex-col items-center sm:items-start px-8 py-10">
         {children}
       </main>
     </div>

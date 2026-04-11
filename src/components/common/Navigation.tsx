@@ -44,7 +44,7 @@ export default function Navigation({
   const router = useRouter();
 
   return (
-    <header className="w-full flex items-center justify-between h-[60] px-1.5">
+    <header className="w-full flex items-center justify-between border-b border-zinc-8=00 p-4">
       {showBackButton ? (
         <Button
           variant="secondary"
@@ -59,7 +59,7 @@ export default function Navigation({
       {isLoading ? (
         <Spinner icon={Loader} className="size-5" />
       ) : (
-        <div className="flex flex-col items-center gap-0.5 text-center">
+        <div className="flex flex-col items-center h-12 gap-0.5 text-center">
           {showLogo && (
             <div className="flex items-center gap-1">
               <img

@@ -11,11 +11,11 @@ import { useMeditations, useMeditationProgress } from '@/hooks/useMeditations';
 import { cn } from '@/lib/utils';
 
 export default function LevelPage() {
+  const [isLevelComplete, setIsLevelComplete] = useState(false);
+
   const params = useParams();
   const categoryId = params.id as string;
   const categoryLevel = Number(params.level);
-
-  const [isLevelComplete, setIsLevelComplete] = useState(false);
 
   const {
     data: category,
@@ -86,6 +86,8 @@ export default function LevelPage() {
           <div className="flex flex-col items-center justify-center gap-2">
             <Badge
               text={`Level ${categoryLevel}`}
+              width={90}
+              height={90}
               className={cn(
                 'text-ring drop-shadow-lg',
                 isLevelComplete && 'text-primary',

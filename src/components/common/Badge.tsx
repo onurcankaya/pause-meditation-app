@@ -2,15 +2,17 @@
 
 type BadgeProps = {
   text: string;
+  width: number;
+  height: number;
   className?: string;
 };
 
-export default function Badge({ text, className }: BadgeProps) {
+export default function Badge({ text, width, height, className }: BadgeProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="100"
-      height="100"
+      width={width}
+      height={height}
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
@@ -30,7 +32,7 @@ export default function Badge({ text, className }: BadgeProps) {
         letterSpacing="-0.2"
         stroke="none"
         fill="currentColor"
-        className="text-[3.5px]"
+        className="text-[3.25px]"
       >
         {text}
       </text>
