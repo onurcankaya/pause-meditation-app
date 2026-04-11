@@ -185,4 +185,13 @@
       font-size: 16px !important;
     }
   }
+
+  [data-slot='button'],
+  [data-slot='tabs-trigger'],
+  [data-slot='dialog-trigger'],
+  [data-slot='alert-dialog-trigger'],
+  [data-slot='popover-trigger'],
+  [data-slot='dialog-close'] {
+    cursor: pointer !important;
+  }
 }
