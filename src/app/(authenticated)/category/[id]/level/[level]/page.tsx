@@ -35,6 +35,16 @@ export default function LevelPage() {
     error: errorMeditationProgress,
   } = useMeditationProgress();
 
+  const isLoading = useMemo(() => {
+    return (
+      isLoadingCategory || isLoadingMeditations || isLoadingMeditationProgress
+    );
+  }, [isLoadingCategory, isLoadingMeditations, isLoadingMeditationProgress]);
+
+  const hasError = useMemo(() => {
+    return errorCategory || errorMeditations || errorMeditationProgress;
+  }, [errorCategory, errorMeditations, errorMeditationProgress]);
+
   const levelTitle = useMemo(() => {
     return `${category?.name || ''} • Level ${categoryLevel}`;
   }, [category, categoryLevel]);
@@ -65,17 +75,10 @@ export default function LevelPage() {
     <PageWrapper
       title={levelTitle}
       description={category?.description}
-      isLoading={isLoadingCategory}
+      isLoading={isLoading}
       showBackButton
     >
-      <QueryState
-        isLoading={
-          isLoadingCategory ||
-          isLoadingMeditations ||
-          isLoadingMeditationProgress
-        }
-        error={errorCategory || errorMeditations || errorMeditationProgress}
-      >
+      <QueryState isLoading={isLoading} error={hasError}>
         <div className="w-full space-y-4">
           {levelMeditations?.map((meditation) => (
             <MeditationCard key={meditation.id} meditation={meditation} />

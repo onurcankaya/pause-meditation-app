@@ -48,7 +48,12 @@ export default function ProfilePage() {
   if (!session) return null;
 
   return (
-    <PageWrapper icon={UserPen} title={user?.name} description="User details">
+    <PageWrapper
+      icon={UserPen}
+      title={user?.name}
+      description="User details"
+      isLoading={isLoading}
+    >
       <QueryState isLoading={isLoading} error={error}>
         <Card className="w-full pt-4 pb-6">
           <CardContent>

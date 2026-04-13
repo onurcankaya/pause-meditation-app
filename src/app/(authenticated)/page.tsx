@@ -9,7 +9,7 @@ export default function Home() {
   const { data: categories, isLoading, error } = useCategories();
 
   return (
-    <PageWrapper showLogo description="Select a category">
+    <PageWrapper showLogo description="Select a category" isLoading={isLoading}>
       <QueryState isLoading={isLoading} error={error}>
         <div className="w-full space-y-4">
           {categories?.length &&
