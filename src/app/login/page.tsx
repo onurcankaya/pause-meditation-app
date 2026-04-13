@@ -40,7 +40,7 @@ export default function LoginPage() {
   }
 
   return (
-    <PageWrapper showLogo>
+    <PageWrapper showLogo isLoading={isLoading}>
       <Card className="w-full border">
         <CardHeader>
           <CardTitle>Sign in</CardTitle>

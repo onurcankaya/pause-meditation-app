@@ -44,8 +44,8 @@ export default function Navigation({
   const router = useRouter();
 
   return (
-    <header className="w-full flex items-center justify-between border-b border-zinc-8=00 p-4">
-      {showBackButton ? (
+    <header className="w-full flex items-center justify-between h-[80px] border-b border-zinc-8=00 p-4">
+      {!isLoading && showBackButton ? (
         <Button
           variant="secondary"
           className="rounded-full w-12 h-12"
@@ -59,7 +59,7 @@ export default function Navigation({
       {isLoading ? (
         <Spinner icon={Loader} className="size-5" />
       ) : (
-        <div className="flex flex-col items-center h-12 gap-0.5 text-center">
+        <div className="flex flex-col items-center gap-0.5 text-center">
           {showLogo && (
             <div className="flex items-center gap-1">
               <img
@@ -71,10 +71,12 @@ export default function Navigation({
             </div>
           )}
 
-          <div className="flex items-center gap-2">
-            {Icon && <Icon className="size-5" />}
-            {title && <h1 className="font-semibold">{title}</h1>}
-          </div>
+          {(Icon || title) && (
+            <div className="flex items-center gap-2">
+              {Icon && <Icon className="size-5" />}
+              {title && <h1 className="font-semibold">{title}</h1>}
+            </div>
+          )}
 
           {description && (
             <p className="text-muted-foreground text-sm sm:text-base">
@@ -84,7 +86,7 @@ export default function Navigation({
         </div>
       )}
 
-      {session?.user ? (
+      {!isLoading && session?.user ? (
         <Popover open={isMenuOpen} onOpenChange={setIsMenuOpen}>
           <PopoverTrigger className="flex items-center justify-center rounded-full bg-secondary w-12 h-12">
             <Menu className="size-5" />
