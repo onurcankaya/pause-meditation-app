@@ -7,13 +7,25 @@ export class MeditationModel {
     categoryId: string,
   ): Promise<Meditation[]> {
     const result = await pool.query(
-      `SELECT m.*, 
-        EXISTS(
-          SELECT 1 FROM user_meditation_progress 
-          WHERE user_id = $1 AND meditation_id = m.id
-        ) as is_completed
+      `SELECT m.*,
+        CASE
+          WHEN EXISTS(
+            SELECT 1 FROM user_meditation_progress 
+            WHERE user_id = $1 AND meditation_id = m.id
+          ) THEN 'completed'
+          WHEN m.day = 1 THEN 'unlocked'
+          WHEN EXISTS(
+            SELECT 1 FROM user_meditation_progress ump
+            JOIN meditations prev ON prev.id = ump.meditation_id
+            WHERE ump.user_id = $1
+            AND prev.category_id = m.category_id
+            AND prev.level = m.level
+            AND prev.day = m.day - 1
+          ) THEN 'unlocked'
+          ELSE 'locked'
+        END as status
       FROM meditations m
-      WHERE category_id = $2 
+      WHERE category_id = $2
       ORDER BY day ASC
       `,
       [userId, categoryId],
