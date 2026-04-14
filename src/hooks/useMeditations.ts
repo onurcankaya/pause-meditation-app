@@ -16,7 +16,7 @@ export function useUpdateMeditation() {
     mutationFn: meditationClient.update,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['meditations'] });
-      toast.success('Meditation session completed');
+      toast.success('Meditation completed');
     },
   });
 }

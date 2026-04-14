@@ -1,13 +1,13 @@
 'use client';
 
 import { useState } from 'react';
-import { Badge, BadgeCheck } from 'lucide-react';
+import { Badge, BadgeCheck, BadgeMinus } from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import MediaPlayer from './common/MediaPlayer';
 import { useCategory } from '@/hooks/useCategories';
 import { useUpdateMeditation } from '@/hooks/useMeditations';
 import { cn } from '@/lib/utils';
-import { Meditation } from '@/api/types/meditation';
+import { Meditation, MeditationStatus } from '@/api/types/meditation';
 
 type MeditationCardProps = {
   meditation: Meditation;
@@ -15,7 +15,6 @@ type MeditationCardProps = {
 
 export default function MeditationCard({ meditation }: MeditationCardProps) {
   const [showDetails, setShowDetails] = useState(false);
-  const [isCompleted, setIsCompleted] = useState(meditation.is_completed);
 
   const { data: category } = useCategory(meditation.category_id);
 
@@ -26,7 +25,6 @@ export default function MeditationCard({ meditation }: MeditationCardProps) {
   }
 
   function handleMeditationComplete(meditationId: string) {
-    setIsCompleted(true);
     updateMeditation.mutate({
       id: meditationId,
     });
@@ -35,8 +33,11 @@ export default function MeditationCard({ meditation }: MeditationCardProps) {
   return (
     <Card
       className={cn(
-        'border gap-4 py-3',
-        isCompleted && 'border border-primary',
+        'border gap-4 py-3 cursor-pointer',
+        meditation.status === MeditationStatus.COMPLETED &&
+          'border border-primary',
+        meditation.status === MeditationStatus.LOCKED &&
+          'opacity-50 pointer-events-none cursor-not-allowed',
       )}
     >
       <CardHeader
@@ -47,10 +48,19 @@ export default function MeditationCard({ meditation }: MeditationCardProps) {
         onClick={toggleDetails}
       >
         <CardTitle>Day {meditation.day}</CardTitle>
-        {isCompleted ? (
+
+        {meditation.status === MeditationStatus.COMPLETED && (
           <BadgeCheck className="text-primary" />
-        ) : (
+        )}
+
+        {meditation.status === MeditationStatus.UNLOCKED && (
           <Badge className={cn('text-ring', showDetails && 'text-primary')} />
+        )}
+
+        {meditation.status === MeditationStatus.LOCKED && (
+          <BadgeMinus
+            className={cn('text-ring', showDetails && 'text-primary')}
+          />
         )}
       </CardHeader>
 
@@ -65,7 +75,7 @@ export default function MeditationCard({ meditation }: MeditationCardProps) {
                 album={category?.name}
               />
 
-              <div className="border-b bg- mx-[-16]" />
+              <div className="border-b mx-[-16]" />
             </>
           )}
 

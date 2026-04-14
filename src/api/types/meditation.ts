@@ -1,3 +1,9 @@
+export enum MeditationStatus {
+  LOCKED = 'locked',
+  UNLOCKED = 'unlocked',
+  COMPLETED = 'completed',
+}
+
 export type Meditation = {
   id: string;
   title: string;
@@ -9,7 +15,7 @@ export type Meditation = {
   video_url: string | null;
   video_duration_seconds: string | null;
   day: number;
-  is_completed: boolean;
+  status: MeditationStatus;
   created_at: string;
 };
 
