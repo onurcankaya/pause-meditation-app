@@ -7,7 +7,6 @@ import {
   LucideIcon,
   ChevronLeft,
   Menu,
-  Loader,
   House,
   UserPen,
   LogOut,
@@ -17,7 +16,6 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
-import { Spinner } from '@/components/ui/spinner';
 import { Button } from '@/components/ui/button';
 
 type NavigationProps = {
@@ -43,9 +41,11 @@ export default function Navigation({
 
   const router = useRouter();
 
+  if (isLoading) return null;
+
   return (
     <header className="w-full flex items-center justify-between h-[80px] border-b border-zinc-8=00 p-4">
-      {!isLoading && showBackButton ? (
+      {showBackButton ? (
         <Button
           variant="secondary"
           className="rounded-full w-12 h-12"
@@ -56,37 +56,34 @@ export default function Navigation({
       ) : (
         <div className="w-8" />
       )}
-      {isLoading ? (
-        <Spinner icon={Loader} className="size-5" />
-      ) : (
-        <div className="flex flex-col items-center gap-0.5 text-center">
-          {showLogo && (
-            <div className="flex items-center gap-1">
-              <img
-                src="/pause-logo.png"
-                alt="pause app logo"
-                className="w-6 h-6"
-              />
-              <h1 className="font-semibold">Pause</h1>
-            </div>
-          )}
 
-          {(Icon || title) && (
-            <div className="flex items-center gap-2">
-              {Icon && <Icon className="size-5" />}
-              {title && <h1 className="font-semibold">{title}</h1>}
-            </div>
-          )}
+      <div className="flex flex-col items-center gap-0.5 text-center">
+        {showLogo && (
+          <div className="flex items-center gap-1">
+            <img
+              src="/pause-logo.png"
+              alt="pause app logo"
+              className="w-6 h-6"
+            />
+            <h1 className="font-semibold">Pause</h1>
+          </div>
+        )}
 
-          {description && (
-            <p className="text-muted-foreground text-sm sm:text-base">
-              {description}
-            </p>
-          )}
-        </div>
-      )}
+        {(Icon || title) && (
+          <div className="flex items-center gap-2">
+            {Icon && <Icon className="size-5" />}
+            {title && <h1 className="font-semibold">{title}</h1>}
+          </div>
+        )}
 
-      {!isLoading && session?.user ? (
+        {description && (
+          <p className="text-muted-foreground text-sm sm:text-base">
+            {description}
+          </p>
+        )}
+      </div>
+
+      {session?.user ? (
         <Popover open={isMenuOpen} onOpenChange={setIsMenuOpen}>
           <PopoverTrigger className="flex items-center justify-center rounded-full bg-secondary w-12 h-12">
             <Menu className="size-5" />

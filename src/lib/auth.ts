@@ -52,7 +52,6 @@ export const authOptions: NextAuthOptions = {
     async jwt({ token, user, account }) {
       if (user && account) {
         const userId = await UserService.getUserId(user.email!);
-
         token.id = userId;
         token.name = user.name;
       } else if (user) {
