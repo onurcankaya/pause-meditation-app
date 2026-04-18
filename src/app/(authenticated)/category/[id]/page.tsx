@@ -8,6 +8,7 @@ import LevelCard from '@/components/LevelCard';
 import { useCategory } from '@/hooks/useCategories';
 import { useMeditations } from '@/hooks/useMeditations';
 import { useMeditationProgress } from '@/hooks/useMeditations';
+import { LevelStatus } from '@/api/types/level';
 import { Meditation } from '@/api/types/meditation';
 
 export default function CategoryPage() {
@@ -64,13 +65,29 @@ export default function CategoryPage() {
   }, [meditationProgress]);
 
   const levels = useMemo(() => {
-    return Object.entries(meditationsByLevel).map(([level, meditations]) => ({
-      level: level,
-      isCompleted: meditations.every((meditation) =>
-        completedMeditationIds?.includes(meditation),
-      ),
-    }));
-  }, [meditationsByLevel, meditationProgress]);
+    return Object.entries(meditationsByLevel).map(([level, meditations]) => {
+      let status = LevelStatus.LOCKED;
+
+      if (
+        meditations.every((meditation) =>
+          completedMeditationIds?.includes(meditation),
+        )
+      ) {
+        status = LevelStatus.COMPLETED;
+      } else if (
+        meditations.some((meditation) =>
+          completedMeditationIds?.includes(meditation),
+        )
+      ) {
+        status = LevelStatus.IN_PROGRESS;
+      }
+
+      return {
+        level,
+        status,
+      };
+    });
+  }, [meditationsByLevel, meditationProgress, completedMeditationIds]);
 
   return (
     <PageWrapper
@@ -87,7 +104,7 @@ export default function CategoryPage() {
                 key={`${category}-${level.level}`}
                 category={category}
                 level={level.level}
-                isCompleted={level.isCompleted}
+                status={level.status}
               />
             ))}
         </div>

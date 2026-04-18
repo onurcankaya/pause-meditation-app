@@ -3,7 +3,8 @@
 import { useState } from 'react';
 import { Badge, BadgeCheck, BadgeMinus } from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
-import MediaPlayer from './common/MediaPlayer';
+import MediaPlayer from '@/components/common/MediaPlayer';
+import StatusIndicator from '@/components/common/StatusIndicator';
 import { useCategory } from '@/hooks/useCategories';
 import { useUpdateMeditation } from '@/hooks/useMeditations';
 import { cn } from '@/lib/utils';
@@ -34,10 +35,9 @@ export default function MeditationCard({ meditation }: MeditationCardProps) {
     <Card
       className={cn(
         'border gap-4 py-3 cursor-pointer',
-        meditation.status === MeditationStatus.COMPLETED &&
-          'border border-primary',
+        meditation.status === MeditationStatus.UNLOCKED && 'border-primary',
         meditation.status === MeditationStatus.LOCKED &&
-          'opacity-50 pointer-events-none cursor-not-allowed',
+          'opacity-60 pointer-events-none cursor-not-allowed',
       )}
     >
       <CardHeader
@@ -54,13 +54,14 @@ export default function MeditationCard({ meditation }: MeditationCardProps) {
         )}
 
         {meditation.status === MeditationStatus.UNLOCKED && (
-          <Badge className={cn('text-ring', showDetails && 'text-primary')} />
+          <div className="flex items-center gap-4">
+            <StatusIndicator variant="in progress" label="Next up" />
+            <Badge className="text-primary" />
+          </div>
         )}
 
         {meditation.status === MeditationStatus.LOCKED && (
-          <BadgeMinus
-            className={cn('text-ring', showDetails && 'text-primary')}
-          />
+          <BadgeMinus className="text-ring" />
         )}
       </CardHeader>
 
