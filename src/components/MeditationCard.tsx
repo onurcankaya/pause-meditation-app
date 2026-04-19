@@ -1,7 +1,7 @@
 'use client';
 
-import { useState } from 'react';
-import { Badge, BadgeCheck, BadgeMinus } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { BadgeCheck, BadgeMinus } from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import MediaPlayer from '@/components/common/MediaPlayer';
 import StatusIndicator from '@/components/common/StatusIndicator';
@@ -20,6 +20,12 @@ export default function MeditationCard({ meditation }: MeditationCardProps) {
   const { data: category } = useCategory(meditation.category_id);
 
   const updateMeditation = useUpdateMeditation();
+
+  useEffect(() => {
+    if (meditation.status === MeditationStatus.UNLOCKED) {
+      setShowDetails(true);
+    }
+  }, [meditation.status]);
 
   function toggleDetails() {
     setShowDetails((prev) => !prev);
@@ -56,7 +62,6 @@ export default function MeditationCard({ meditation }: MeditationCardProps) {
         {meditation.status === MeditationStatus.UNLOCKED && (
           <div className="flex items-center gap-4">
             <StatusIndicator variant="in progress" label="Next up" />
-            <Badge className="text-primary" />
           </div>
         )}
 
