@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { Badge, BadgeCheck, BadgeMinus } from 'lucide-react';
+import { BadgeCheck, BadgeMinus } from 'lucide-react';
 import { Card, CardHeader, CardTitle } from '@/components/ui/card';
 import StatusIndicator from '@/components/common/StatusIndicator';
 import { cn } from '@/lib/utils';
@@ -43,7 +43,6 @@ export default function LevelCard({ category, level, status }: LevelCardProps) {
           {status === LevelStatus.IN_PROGRESS && (
             <div className="flex items-center gap-4">
               <StatusIndicator variant={status} />
-              <Badge className="text-primary" />
             </div>
           )}
 
