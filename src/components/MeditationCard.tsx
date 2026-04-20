@@ -1,10 +1,11 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useContext, useMemo, useEffect } from 'react';
 import { BadgeCheck, BadgeMinus } from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import MediaPlayer from '@/components/common/MediaPlayer';
 import StatusIndicator from '@/components/common/StatusIndicator';
+import { useMediaPlayer } from '@/context/MediaPlayerContext';
 import { useCategory } from '@/hooks/useCategories';
 import { useUpdateMeditation } from '@/hooks/useMeditations';
 import { cn } from '@/lib/utils';
@@ -16,10 +17,21 @@ type MeditationCardProps = {
 
 export default function MeditationCard({ meditation }: MeditationCardProps) {
   const [showDetails, setShowDetails] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
 
   const { data: category } = useCategory(meditation.category_id);
 
   const updateMeditation = useUpdateMeditation();
+
+  const { playingMeditationId, setPlayingMeditationId } = useMediaPlayer();
+
+  useEffect(() => {
+    if (playingMeditationId === meditation.id) {
+      setIsPlaying(true);
+    } else {
+      setIsPlaying(false);
+    }
+  }, [playingMeditationId, meditation.id]);
 
   useEffect(() => {
     if (meditation.status === MeditationStatus.UNLOCKED) {
@@ -35,6 +47,15 @@ export default function MeditationCard({ meditation }: MeditationCardProps) {
     updateMeditation.mutate({
       id: meditationId,
     });
+  }
+
+  function handlePlay() {
+    setPlayingMeditationId(meditation.id);
+    setIsPlaying(true);
+  }
+
+  function handlePause() {
+    setIsPlaying(false);
   }
 
   return (
@@ -91,6 +112,9 @@ export default function MeditationCard({ meditation }: MeditationCardProps) {
             title={meditation.title}
             album={category?.name}
             onMediaEnd={() => handleMeditationComplete(meditation.id)}
+            isPlaying={isPlaying}
+            onPlay={handlePlay}
+            onPause={handlePause}
           />
         </CardContent>
       )}
