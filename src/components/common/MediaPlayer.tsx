@@ -11,6 +11,9 @@ type MediaPlayerProps = {
   artist?: string;
   album?: string;
   onMediaEnd?: () => void;
+  isPlaying?: boolean;
+  onPlay?: () => void;
+  onPause?: () => void;
 };
 
 export default function MediaPlayer({
@@ -20,9 +23,11 @@ export default function MediaPlayer({
   artist = 'Pause',
   album,
   onMediaEnd,
+  isPlaying,
+  onPlay,
+  onPause,
 }: MediaPlayerProps) {
   const mediaRef = useRef<HTMLAudioElement | HTMLVideoElement>(null);
-  const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
 
@@ -32,7 +37,10 @@ export default function MediaPlayer({
 
     const updateTime = () => setCurrentTime(media.currentTime);
     const updateDuration = () => setDuration(media.duration);
-    const handleEnded = () => setIsPlaying(false);
+    const handleEnded = () => {
+      onPause?.();
+      onMediaEnd?.();
+    };
 
     media.addEventListener('timeupdate', updateTime);
     media.addEventListener('loadedmetadata', updateDuration);
@@ -43,7 +51,7 @@ export default function MediaPlayer({
       media.removeEventListener('loadedmetadata', updateDuration);
       media.removeEventListener('ended', handleEnded);
     };
-  }, []);
+  }, [onPause, onMediaEnd]);
 
   useEffect(() => {
     if ('mediaSession' in navigator) {
@@ -55,16 +63,16 @@ export default function MediaPlayer({
     }
   }, [title, artist, album]);
 
-  const togglePlay = async () => {
-    if (!mediaRef.current) return;
+  useEffect(() => {
+    const media = mediaRef.current;
+    if (!media) return;
 
     if (isPlaying) {
-      mediaRef.current.pause();
+      media.play();
     } else {
-      await mediaRef.current.play();
+      media.pause();
     }
-    setIsPlaying(!isPlaying);
-  };
+  }, [isPlaying]);
 
   const seek = (time: number) => {
     if (mediaRef.current) {
@@ -85,9 +93,9 @@ export default function MediaPlayer({
         <video
           ref={mediaRef as any}
           src={src}
-          onEnded={onMediaEnd}
           className="max-h-[300] rounded-md"
           controls
+          autoPlay={false}
         />
       ) : (
         <audio ref={mediaRef as any} src={src} onEnded={onMediaEnd} />
@@ -96,7 +104,7 @@ export default function MediaPlayer({
       {type === 'audio' && (
         <div className="w-full flex flex-col gap-4">
           <Button
-            onClick={togglePlay}
+            onClick={isPlaying ? onPause : onPlay}
             variant={type === 'audio' ? 'default' : 'secondary'}
             className="h-9"
           >

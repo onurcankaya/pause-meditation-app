@@ -2,6 +2,7 @@
 
 import { useState, useMemo, useEffect } from 'react';
 import { useParams } from 'next/navigation';
+import { MediaPlayerProvider } from '@/context/MediaPlayerContext';
 import PageWrapper from '@/components/common/PageWrapper';
 import QueryState from '@/components/common/QueryState';
 import MeditationCard from '@/components/MeditationCard';
@@ -11,6 +12,14 @@ import { useMeditations, useMeditationProgress } from '@/hooks/useMeditations';
 import { cn } from '@/lib/utils';
 
 export default function LevelPage() {
+  return (
+    <MediaPlayerProvider>
+      <LevelPageContent />
+    </MediaPlayerProvider>
+  );
+}
+
+function LevelPageContent() {
   const [isLevelComplete, setIsLevelComplete] = useState(false);
 
   const params = useParams();
