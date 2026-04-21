@@ -8,6 +8,7 @@ import {
   ChevronLeft,
   Menu,
   House,
+  ChartNoAxesColumn,
   UserPen,
   LogOut,
 } from 'lucide-react';
@@ -100,6 +101,14 @@ export default function Navigation({
             >
               <House />
               Home
+            </Button>
+            <Button
+              variant="outline"
+              className="w-full"
+              onClick={() => router.push('/stats')}
+            >
+              <ChartNoAxesColumn />
+              Stats
             </Button>
             <Button
               variant="outline"

@@ -194,4 +194,79 @@
   [data-slot='dialog-close'] {
     cursor: pointer !important;
   }
+
+  [data-slot='calendar'] {
+    [data-slot='button'][data-selected-single='true'],
+    [data-slot='button'][data-range-start='true'],
+    [data-slot='button'][data-range-end='true'] {
+      background-color: var(--color-neon-green-300) !important;
+    }
+  }
+
+  [data-slot='activity-calendar-card'] {
+    gap: 0.5rem !important;
+  }
+
+  [data-slot='activity-calendar'] {
+    padding: 0.5rem 0 !important;
+    nav {
+      height: 36px !important;
+
+      @media (min-width: 768px) {
+        padding: 0.5rem !important;
+      }
+
+      button {
+        width: 36px !important;
+        height: 36px !important;
+      }
+    }
+
+    .rdp-month {
+      gap: 1.5rem !important;
+
+      .rdp-month_caption {
+        height: 36px !important;
+      }
+    }
+
+    .rdp-weekdays {
+      margin-bottom: 0.5rem !important;
+    }
+
+    [role='status'] {
+      font-size: 14px !important;
+    }
+
+    [role='gridcell'],
+    [role='gridcell'][data-today='true'] {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      height: 44px !important;
+      font-size: 13px !important;
+
+      @media (min-width: 640px) {
+        height: 48px !important;
+      }
+
+      button {
+        width: 36px !important;
+        height: 36px !important;
+
+        @media (min-width: 640px) {
+          width: 40px !important;
+          height: 40px !important;
+        }
+      }
+    }
+  }
+
+  [role='gridcell'][data-today='true'] {
+    background-color: transparent !important;
+
+    button {
+      background-color: var(--muted) !important;
+    }
+  }
 }

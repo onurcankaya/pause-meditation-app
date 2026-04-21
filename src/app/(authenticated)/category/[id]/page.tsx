@@ -7,7 +7,7 @@ import QueryState from '@/components/common/QueryState';
 import LevelCard from '@/components/LevelCard';
 import { useCategory } from '@/hooks/useCategories';
 import { useMeditations } from '@/hooks/useMeditations';
-import { useMeditationProgress } from '@/hooks/useMeditations';
+import { useMeditationProgress } from '@/hooks/useMeditationProgress';
 import { LevelStatus } from '@/api/types/level';
 import { Meditation } from '@/api/types/meditation';
 
@@ -96,7 +96,11 @@ export default function CategoryPage() {
       isLoading={isLoading}
       showBackButton
     >
-      <QueryState isLoading={isLoading} error={hasError}>
+      <QueryState
+        isLoading={isLoading}
+        error={hasError}
+        queryKeys={['categories', 'meditations', 'meditationProgress']}
+      >
         <div className="w-full space-y-4">
           {category &&
             levels.map((level) => (

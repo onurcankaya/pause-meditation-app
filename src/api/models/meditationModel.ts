@@ -1,5 +1,5 @@
 import pool from '@/lib/db';
-import { Meditation, MeditationProgress } from '@/api/types/meditation';
+import { Meditation, CompletedMeditation } from '@/api/types/meditation';
 
 export class MeditationModel {
   static async findAll(
@@ -47,7 +47,7 @@ export class MeditationModel {
 
   static async findMeditationProgress(
     userId: string,
-  ): Promise<MeditationProgress[]> {
+  ): Promise<CompletedMeditation[]> {
     const result = await pool.query(
       `SELECT * FROM user_meditation_progress WHERE user_id = $1`,
       [userId],

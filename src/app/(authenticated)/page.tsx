@@ -10,7 +10,11 @@ export default function Home() {
 
   return (
     <PageWrapper showLogo description="Select a category" isLoading={isLoading}>
-      <QueryState isLoading={isLoading} error={error}>
+      <QueryState
+        isLoading={isLoading}
+        error={error}
+        queryKeys={['categories']}
+      >
         <div className="w-full space-y-4">
           {categories?.length &&
             categories.map((category) => (

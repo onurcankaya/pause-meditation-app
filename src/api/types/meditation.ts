@@ -19,7 +19,7 @@ export type Meditation = {
   created_at: string;
 };
 
-export type MeditationProgress = {
+export type CompletedMeditation = {
   id: string;
   user_id: string;
   meditation_id: string;
