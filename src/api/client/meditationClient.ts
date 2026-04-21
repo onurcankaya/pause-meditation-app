@@ -1,4 +1,4 @@
-import { Meditation, MeditationProgress } from '@/api/types/meditation';
+import { Meditation, CompletedMeditation } from '@/api/types/meditation';
 
 const BASE_URL = '/api';
 const MEDITATIONS_URL = `${BASE_URL}/meditations`;
@@ -25,7 +25,7 @@ export const meditationClient = {
     return response.json();
   },
 
-  getMeditationProgress: async (): Promise<MeditationProgress[]> => {
+  getMeditationProgress: async (): Promise<CompletedMeditation[]> => {
     const url = `${MEDITATIONS_URL}/progress`;
 
     const response = await fetch(url);

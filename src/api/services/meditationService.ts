@@ -1,5 +1,5 @@
 import { MeditationModel } from '@/api/models/meditationModel';
-import { Meditation, MeditationProgress } from '@/api/types/meditation';
+import { Meditation, CompletedMeditation } from '@/api/types/meditation';
 
 export class MeditationService {
   static async getMeditations(
@@ -26,7 +26,7 @@ export class MeditationService {
 
   static async getMeditationProgress(
     userId: string,
-  ): Promise<MeditationProgress[]> {
+  ): Promise<CompletedMeditation[]> {
     return MeditationModel.findMeditationProgress(userId);
   }
 }

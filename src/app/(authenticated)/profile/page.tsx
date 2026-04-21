@@ -54,7 +54,7 @@ export default function ProfilePage() {
       description="User details"
       isLoading={isLoading}
     >
-      <QueryState isLoading={isLoading} error={error}>
+      <QueryState isLoading={isLoading} error={error} queryKeys={['user']}>
         <Card className="w-full pt-4 pb-6">
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-6 mt-2">

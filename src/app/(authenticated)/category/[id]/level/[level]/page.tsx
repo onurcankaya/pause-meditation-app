@@ -8,7 +8,8 @@ import QueryState from '@/components/common/QueryState';
 import MeditationCard from '@/components/MeditationCard';
 import Badge from '@/components/common/Badge';
 import { useCategory } from '@/hooks/useCategories';
-import { useMeditations, useMeditationProgress } from '@/hooks/useMeditations';
+import { useMeditations } from '@/hooks/useMeditations';
+import { useMeditationProgress } from '@/hooks/useMeditationProgress';
 import { cn } from '@/lib/utils';
 
 export default function LevelPage() {
@@ -87,7 +88,11 @@ function LevelPageContent() {
       isLoading={isLoading}
       showBackButton
     >
-      <QueryState isLoading={isLoading} error={hasError}>
+      <QueryState
+        isLoading={isLoading}
+        error={hasError}
+        queryKeys={['categories', 'meditations', 'meditationProgress']}
+      >
         <div className="w-full space-y-4">
           {levelMeditations?.map((meditation) => (
             <MeditationCard key={meditation.id} meditation={meditation} />
