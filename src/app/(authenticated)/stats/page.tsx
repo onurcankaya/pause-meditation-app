@@ -4,6 +4,7 @@ import { ChartNoAxesColumn } from 'lucide-react';
 import { useMeditationProgress } from '@/hooks/useMeditationProgress';
 import PageWrapper from '@/components/common/PageWrapper';
 import QueryState from '@/components/common/QueryState';
+import StatsOverview from '@/components/stats/StatsOverview';
 import ActivityCalendar from '@/components/stats/ActivityCalendar';
 
 export default function StatsPage() {
@@ -24,7 +25,10 @@ export default function StatsPage() {
         error={error}
         queryKeys={['meditationProgress']}
       >
-        <ActivityCalendar meditations={completedMeditations || []} />
+        <div className="w-full space-y-6">
+          <StatsOverview completedMeditations={completedMeditations || []} />
+          <ActivityCalendar completedMeditations={completedMeditations || []} />
+        </div>
       </QueryState>
     </PageWrapper>
   );

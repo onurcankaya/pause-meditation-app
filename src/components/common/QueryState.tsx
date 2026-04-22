@@ -22,22 +22,21 @@ export default function QueryState({
   if (error) {
     return (
       <div className="w-full flex flex-1 items-center justify-center p-4">
-        <div className="w-full flex items-center justify-center border border-red-400 rounded-md p-4">
+        <div className="w-full flex flex-col items-center justify-center gap-3 border border-red-400 rounded-md p-4">
           <p className="text-sm text-center text-red-400">{error.message}</p>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => {
+              queryClient.invalidateQueries({
+                queryKey: queryKeys,
+              });
+            }}
+          >
+            <RetryIcon />
+            Retry
+          </Button>
         </div>
-
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => {
-            queryClient.invalidateQueries({
-              queryKey: queryKeys,
-            });
-          }}
-        >
-          <RetryIcon />
-          Retry
-        </Button>
       </div>
     );
   }

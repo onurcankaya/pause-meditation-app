@@ -4,12 +4,12 @@ const BASE_URL = '/api';
 const MEDITATIONS_URL = `${BASE_URL}/meditations`;
 
 export const meditationClient = {
-  getAll: async (categoryId: string): Promise<Meditation[]> => {
-    const url = `${MEDITATIONS_URL}/${categoryId}`;
+  getMeditation: async (meditationId: string): Promise<Meditation> => {
+    const url = `${MEDITATIONS_URL}/${meditationId}`;
 
     const response = await fetch(url);
 
-    if (!response.ok) throw new Error('Failed to fetch meditations');
+    if (!response.ok) throw new Error('Failed to fetch meditation');
 
     return response.json();
   },

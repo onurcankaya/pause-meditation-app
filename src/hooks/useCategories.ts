@@ -15,3 +15,10 @@ export function useCategory(categoryId: string) {
     enabled: !!categoryId,
   });
 }
+
+export function useMeditationsByCategory(categoryId: string) {
+  return useQuery({
+    queryKey: ['meditations', categoryId],
+    queryFn: () => categoryClient.getMeditationsByCategory(categoryId),
+  });
+}

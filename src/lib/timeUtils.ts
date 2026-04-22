@@ -6,3 +6,7 @@ export function formatSeconds(seconds: number) {
 
   return `${minutes.toString().padStart(2, '0')}:${secondsRemaining.toString().padStart(2, '0')}`;
 }
+
+export function formatSecondsToMinutes(seconds: number) {
+  return `${Math.round(seconds / 60)}m`;
+}
