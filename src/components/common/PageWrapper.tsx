@@ -33,7 +33,7 @@ export default function PageWrapper({
         showBackButton={showBackButton}
         isLoading={isLoading}
       />
-      <main className="flex flex-1 w-full max-w-xl flex-col items-center sm:items-start px-8 py-10">
+      <main className="flex flex-1 w-full max-w-xl flex-col items-center sm:items-start px-7 py-10">
         {children}
       </main>
     </div>

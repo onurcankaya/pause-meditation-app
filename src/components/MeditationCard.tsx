@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useContext, useMemo, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { BadgeCheck, BadgeMinus } from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import MediaPlayer from '@/components/common/MediaPlayer';

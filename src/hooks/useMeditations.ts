@@ -2,10 +2,11 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import { meditationClient } from '@/api/client/meditationClient';
 
-export function useMeditations(categoryId: string) {
+export function useMeditation(meditationId: string) {
   return useQuery({
-    queryKey: ['meditations', categoryId],
-    queryFn: () => meditationClient.getAll(categoryId),
+    queryKey: ['meditation', meditationId],
+    queryFn: () => meditationClient.getMeditation(meditationId),
+    enabled: !!meditationId,
   });
 }
 

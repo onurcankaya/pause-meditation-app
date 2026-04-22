@@ -2,15 +2,12 @@ import { MeditationModel } from '@/api/models/meditationModel';
 import { Meditation, CompletedMeditation } from '@/api/types/meditation';
 
 export class MeditationService {
-  static async getMeditations(
-    userId: string,
-    categoryId: string,
-  ): Promise<Meditation[]> {
-    if (!categoryId) {
-      throw new Error('Invalid category id');
+  static async getMeditation(meditationId: string): Promise<Meditation> {
+    if (!meditationId) {
+      throw new Error('Invalid meditation id');
     }
 
-    return MeditationModel.findAll(userId, categoryId);
+    return MeditationModel.find(meditationId);
   }
 
   static async updateMeditation(

@@ -24,4 +24,5 @@ export type CompletedMeditation = {
   user_id: string;
   meditation_id: string;
   completed_at: string;
+  duration_seconds: number;
 };

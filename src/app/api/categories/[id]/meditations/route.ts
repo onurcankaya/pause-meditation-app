@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
-import { MeditationService } from '@/api/services/meditationService';
+import { CategoryService } from '@/api/services/categoryService';
 
 export async function GET(
   request: NextRequest,
@@ -15,16 +15,19 @@ export async function GET(
     }
 
     const params = await context.params;
-    const meditationId = params.id;
+    const categoryId = params.id;
 
-    const meditations = await MeditationService.getMeditation(meditationId);
+    const meditations = await CategoryService.getMeditationsByCategory(
+      session.user.id,
+      categoryId,
+    );
 
     return NextResponse.json(meditations);
   } catch (error) {
-    console.error('Meditation fetch error:', error);
+    console.error('Meditations fetch error:', error);
 
     return NextResponse.json(
-      { error: 'Failed to fetch meditation' },
+      { error: 'Failed to fetch meditations' },
       { status: 500 },
     );
   }
