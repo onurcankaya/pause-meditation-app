@@ -98,7 +98,7 @@ export default function MediaPlayer({
           autoPlay={false}
         />
       ) : (
-        <audio ref={mediaRef as any} src={src} onEnded={onMediaEnd} />
+        <audio ref={mediaRef as any} src={src} />
       )}
 
       {type === 'audio' && (
