@@ -6,9 +6,8 @@ import PageWrapper from '@/components/common/PageWrapper';
 import QueryState from '@/components/common/QueryState';
 import LevelCard from '@/components/LevelCard';
 import { useCategory, useMeditationsByCategory } from '@/hooks/useCategories';
-import { useMeditationProgress } from '@/hooks/useMeditationProgress';
 import { LevelStatus } from '@/api/types/level';
-import { Meditation } from '@/api/types/meditation';
+import { MeditationStatus } from '@/api/types/meditation';
 
 export default function CategoryPage() {
   const params = useParams();
@@ -26,67 +25,46 @@ export default function CategoryPage() {
     error: errorMeditations,
   } = useMeditationsByCategory(categoryId);
 
-  const {
-    data: meditationProgress,
-    isLoading: isLoadingMeditationProgress,
-    error: errorMeditationProgress,
-  } = useMeditationProgress();
-
   const isLoading = useMemo(() => {
-    return (
-      isLoadingCategory || isLoadingMeditations || isLoadingMeditationProgress
-    );
-  }, [isLoadingCategory, isLoadingMeditations, isLoadingMeditationProgress]);
+    return isLoadingCategory || isLoadingMeditations;
+  }, [isLoadingCategory, isLoadingMeditations]);
 
   const hasError = useMemo(() => {
-    return errorCategory || errorMeditations || errorMeditationProgress;
-  }, [errorCategory, errorMeditations, errorMeditationProgress]);
-
-  const meditationsByLevel = useMemo(() => {
-    if (!meditations) return {};
-
-    const map: Record<number, Meditation['id'][]> = {};
-
-    for (const meditation of meditations) {
-      if (!map[meditation.level]) {
-        map[meditation.level] = [];
-      }
-      map[meditation.level].push(meditation.id);
-    }
-
-    return map;
-  }, [meditations]);
-
-  const completedMeditationIds = useMemo(() => {
-    return meditationProgress?.map(
-      (completedMeditation) => completedMeditation.meditation_id,
-    );
-  }, [meditationProgress]);
+    return errorCategory || errorMeditations;
+  }, [errorCategory, errorMeditations]);
 
   const levels = useMemo(() => {
-    return Object.entries(meditationsByLevel).map(([level, meditations]) => {
-      let status = LevelStatus.LOCKED;
+    if (!meditations) return [];
 
-      if (
-        meditations.every((meditation) =>
-          completedMeditationIds?.includes(meditation),
-        )
-      ) {
+    const levelNumbers = [...new Set(meditations.map((m) => m.level))].sort(
+      (a, b) => a - b,
+    );
+
+    return levelNumbers.map((level) => {
+      const levelMeditations = meditations.filter((m) => m.level === level);
+      const prevLevelMeditations = meditations.filter(
+        (m) => m.level === level - 1,
+      );
+
+      const allCurrentComplete = levelMeditations.every(
+        (m) => m.status === MeditationStatus.COMPLETED,
+      );
+      const allPrevComplete =
+        level === 1 ||
+        prevLevelMeditations.every(
+          (m) => m.status === MeditationStatus.COMPLETED,
+        );
+
+      let status = LevelStatus.LOCKED;
+      if (allCurrentComplete) {
         status = LevelStatus.COMPLETED;
-      } else if (
-        meditations.some((meditation) =>
-          completedMeditationIds?.includes(meditation),
-        )
-      ) {
+      } else if (allPrevComplete) {
         status = LevelStatus.IN_PROGRESS;
       }
 
-      return {
-        level,
-        status,
-      };
+      return { level, status };
     });
-  }, [meditationsByLevel, meditationProgress, completedMeditationIds]);
+  }, [meditations]);
 
   return (
     <PageWrapper
@@ -104,7 +82,7 @@ export default function CategoryPage() {
           {category &&
             levels.map((level) => (
               <LevelCard
-                key={`${category}-${level.level}`}
+                key={`${category.id}-${level.level}`}
                 category={category}
                 level={level.level}
                 status={level.status}

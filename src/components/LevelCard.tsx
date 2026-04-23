@@ -10,7 +10,7 @@ import { LevelStatus } from '@/api/types/level';
 
 type LevelCardProps = {
   category: Category;
-  level: string;
+  level: number;
   status: LevelStatus;
 };
 
