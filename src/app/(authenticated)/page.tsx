@@ -4,9 +4,11 @@ import { useMemo } from 'react';
 import { useSession } from 'next-auth/react';
 import { useUser } from '@/hooks/useUser';
 import { useCategories } from '@/hooks/useCategories';
+import { useMeditationProgress } from '@/hooks/useMeditationProgress';
 import PageWrapper from '@/components/common/PageWrapper';
 import QueryState from '@/components/common/QueryState';
 import WelcomeCard from '@/components/WelcomeCard';
+import StatsOverview from '@/components/stats/StatsOverview';
 import CategoryCard from '@/components/CategoryCard';
 
 export default function Home() {
@@ -22,8 +24,15 @@ export default function Home() {
     error: errorCategories,
   } = useCategories();
 
-  const isLoading = isLoadingUser || isLoadingCategories;
-  const error = errorUser || errorCategories;
+  const {
+    data: completedMeditations,
+    isLoading: isLoadingCompletedMeditations,
+    error: errorCompletedMeditations,
+  } = useMeditationProgress();
+
+  const isLoading =
+    isLoadingUser || isLoadingCategories || isLoadingCompletedMeditations;
+  const error = errorUser || errorCategories || errorCompletedMeditations;
 
   const getGreeting = useMemo(() => {
     const hour = new Date().getHours();
@@ -45,17 +54,21 @@ export default function Home() {
         error={error}
         queryKeys={['categories']}
       >
-        <WelcomeCard greeting={getGreeting} className="mb-8" />
+        <div className="w-full space-y-6">
+          <WelcomeCard greeting={getGreeting} />
+          <StatsOverview completedMeditations={completedMeditations || []} />
 
-        <div className="w-full mb-2">
-          <h4 className="text-[11px] text-ring uppercase tracking-widest text-left font-semibold">
-            Categories
-          </h4>
-        </div>
-        <div className="w-full space-y-4">
-          {categories?.map((category) => (
-            <CategoryCard key={category.id} category={category} />
-          ))}
+          <div>
+            <h4 className="text-[11px] text-ring uppercase tracking-widest text-left font-semibold mb-3">
+              Categories
+            </h4>
+
+            <div className="w-full space-y-4">
+              {categories?.map((category) => (
+                <CategoryCard key={category.id} category={category} />
+              ))}
+            </div>
+          </div>
         </div>
       </QueryState>
     </PageWrapper>
